@@ -8,7 +8,7 @@ Start the App:
         Navigate to the BibleJournal folder
         Enter these commands:
             javac *.java
-            java Login
+            java java BibleJournalApp.java
 
 App Instructions:
     - View User Prayer Journal
