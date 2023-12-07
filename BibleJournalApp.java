@@ -28,17 +28,15 @@ public class BibleJournalApp {
         // Beginner Verses
         bibleVerses = new ArrayList<>();
         bibleVerses = loadBibleVersesFromTxt(txtFile);
-        // bibleVerses.add(new BibleVerse("Genesis", 1, 1, "In the beginning...", "NIV", new ArrayList<>()));
-        // bibleVerses.add(new BibleVerse("Psalm", 23, 1, "The Lord is my shepherd...", "NIV", new ArrayList<>()));
         //Set Daily Verses
         dailyVerses = new ArrayList<>();
-        dailyVerses.add(new BibleVerse("Philippians", 2, 3, " Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves,", "NIV", null));
-        dailyVerses.add(new BibleVerse("Psalms", 23, 5, "You prepare a table before me in the precense of my enemies. You anoit my head with oil. my cup overflows", "NIV", null));
-        dailyVerses.add(new BibleVerse("John", 15, 5, "I am the vine, you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing", "NIV", null));
-        dailyVerses.add(new BibleVerse("Joshua", 1, 9, "Have I not commanded you? Be strong and corageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.", "NIV", null));
-        dailyVerses.add(new BibleVerse("Mark", 10, 45, "For even the son of man cam not to be served but to serve others and to ive his life as a ransom for many.", "NIV", null));
-        dailyVerses.add(new BibleVerse("Philippians", 2, 17, "But even if I am being poured out like a drink offering on the sacrifice and service coming from your faith, I am glad and rejoice with all of you", "NIV", null));
-        dailyVerses.add(new BibleVerse("Jeremiah", 29, 11, "For I know the plans I have for you declares the Lord, plans to prosper you and not to harm you, plans to give you a hope and a future.", "NIV", null));
+        dailyVerses.add(new BibleVerse("Philippians", "2", "3", " Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves,", "NIV", null));
+        dailyVerses.add(new BibleVerse("Psalms", "23", "5", "You prepare a table before me in the precense of my enemies. You anoit my head with oil. my cup overflows", "NIV", null));
+        dailyVerses.add(new BibleVerse("John", "15", "5", "I am the vine, you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing", "NIV", null));
+        dailyVerses.add(new BibleVerse("Joshua", "1", "9", "Have I not commanded you? Be strong and corageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.", "NIV", null));
+        dailyVerses.add(new BibleVerse("Mark", "10", "45", "For even the son of man cam not to be served but to serve others and to ive his life as a ransom for many.", "NIV", null));
+        dailyVerses.add(new BibleVerse("Philippians", "2", "17", "But even if I am being poured out like a drink offering on the sacrifice and service coming from your faith, I am glad and rejoice with all of you", "NIV", null));
+        dailyVerses.add(new BibleVerse("Jeremiah", "29", "11", "For I know the plans I have for you declares the Lord, plans to prosper you and not to harm you, plans to give you a hope and a future.", "NIV", null));
         
         // Render App
         landingPage();
@@ -83,6 +81,7 @@ public class BibleJournalApp {
             description.setSize(200, 40);
             description.setFont(new Font("Arial", Font.PLAIN, 14));
             description.setAlignmentX(Component.CENTER_ALIGNMENT);
+            description.setAlignmentY(Component.CENTER_ALIGNMENT);
             panel.add(description);
 
             // Add Verses
@@ -151,10 +150,14 @@ public class BibleJournalApp {
             // Create the main frame
             JFrame frame = new JFrame("Bible Journal App");
             
-            frame.setSize(500, 400);
+            frame.setSize(500, 500);
 
             // Create form panel
             JPanel formPanel = new JPanel();
+            JLabel titleLabel = new JLabel("Add Verses");
+            titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+            titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            formPanel.add(titleLabel);
 
             formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
             JComboBox<BibleVerse> verseComboBox = new JComboBox<>();
@@ -215,7 +218,7 @@ public class BibleJournalApp {
 
                     }
                     System.out.println(mates);
-                    addBibleVerse(bookField.getText(), Integer.parseInt(chapterField.getText()), Integer.parseInt(verseField.getText()), textField.getText(), versionField.getText(), mates);
+                    addBibleVerse(bookField.getText(), chapterField.getText(), verseField.getText(), textField.getText(), versionField.getText(), mates);
                     updateComboBox(verseComboBox);
                     saveBibleVersestoTxt(bibleVerses);
                     openVersesWindow();
@@ -267,14 +270,24 @@ public class BibleJournalApp {
         
 
         private void openVersesWindow() {
+
             // Create a new frame for viewing stored verses
-            JFrame versesFrame = new JFrame("Stored Bible Verses");
+            JFrame versesFrame = new JFrame("My Verses");
             versesFrame.setSize(900, 900);
             versesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+
             // Create a panel to hold checkboxes and labels
             JPanel mainPanel = new JPanel();
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+            
+            //Title
+            JLabel titleLabel = new JLabel("My Verses");
+            titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+            titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            mainPanel.add(titleLabel);
+
+            //ScrollPane
+            JScrollPane scroller = new JScrollPane(mainPanel);
         
             // Display stored verses
             for (BibleVerse verse : bibleVerses) {
@@ -288,9 +301,10 @@ public class BibleJournalApp {
                     // Add verse information to the text area
                     JTextArea verseTextArea = new JTextArea();
                     verseTextArea.setSize(900, 20);
+                    verseTextArea.setFont(new Font("Arial", Font.BOLD, 15));
                     verseTextArea.setEditable(false);
                     verseTextArea.append(verse.getBook() + " " + verse.getChapter() + ":" + verse.getVerse() + "\n");
-                    verseTextArea.append(verse.getText() + "\n\n");
+                    verseTextArea.append(verse.getText() + "\n");
         
                     // Add checkboxes to the verse panel
                     ArrayList<Partner> mates = verse.getMates();
@@ -311,7 +325,7 @@ public class BibleJournalApp {
                     mainPanel.add(verseTextArea);
                     mainPanel.add(versePanel);
         
-                    mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));  
+                    mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));  // Add some space between verses
                 }
             }
         
@@ -325,15 +339,20 @@ public class BibleJournalApp {
 
     private void openPrayerJournal() {
         // Create a new frame for viewing Journal
-        JFrame journalFrame = new JFrame("Stored Bible Verses");
+        JFrame journalFrame = new JFrame("Prayer Journal");
         journalFrame.setSize(900, 900);
         journalFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        
 
         // Create a text area to display and edit Journal
         JTextArea journalText = new JTextArea();
         journalText.setEditable(true);
+        journalText.setFont(new Font("Arial", Font.CENTER_BASELINE, 17));
 
-        // Load text from file 
+        
+
+        // Load Journal
         String loadedText = loadJournal();
         journalText.setText(loadedText);
 
@@ -357,39 +376,40 @@ public class BibleJournalApp {
         journalFrame.setVisible(true);
     }   
 
-     private void openLessons() {
-    // Create a new frame for viewing stored verses
-    JFrame versesFrame = new JFrame("Stored Bible Verses");
-    versesFrame.setSize(900, 900);
-    versesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            private void openLessons() {
+                // Lessons Frame
+                JFrame lessonsFrame = new JFrame("My Lesson Plans");
+                lessonsFrame.setSize(900, 900);
+                lessonsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-    // Create a text area to display and edit stored verses
-    JTextArea versesTextArea = new JTextArea();
-    versesTextArea.setEditable(true);
+                // Lessons
+                JTextArea lessonsTextArea = new JTextArea();
+                lessonsTextArea.setEditable(true);
+                lessonsTextArea.setFont(new Font("Arial", Font.CENTER_BASELINE, 17));
 
-    // Load text from file 
-    String loadedText = loadLessons();
-    versesTextArea.setText(loadedText);
+                // Load Lesons 
+                String loadedText = loadLessons();
+                lessonsTextArea.setText(loadedText);
 
-    // Create a button to save the text to a file
-    JButton saveButton = new JButton("Save Lessons");
-    saveButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            saveLessons(versesTextArea.getText());
+                // Save Lessons
+                JButton saveButton = new JButton("Save Lessons");
+                saveButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        saveLessons(lessonsTextArea.getText());
+                    }
+                });
+
+                // Add components to the frame
+                JPanel buttonPanel = new JPanel();
+                buttonPanel.add(saveButton);
+
+                lessonsFrame.getContentPane().add(new JScrollPane(lessonsTextArea), BorderLayout.CENTER);
+                lessonsFrame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+
+                // Set frame visibility
+                lessonsFrame.setVisible(true);
         }
-    });
-
-    // Add components to the frame
-    JPanel buttonPanel = new JPanel();
-    buttonPanel.add(saveButton);
-
-    versesFrame.getContentPane().add(new JScrollPane(versesTextArea), BorderLayout.CENTER);
-    versesFrame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-
-    // Set frame visibility
-    versesFrame.setVisible(true);
-}
 
 private String loadJournal() {
     StringBuilder content = new StringBuilder();
@@ -442,7 +462,7 @@ private String loadJournal() {
         }
     }
 
-    private void addBibleVerse(String book, int chapter, int verse, String text, String version, ArrayList<Partner> mates) {
+    private void addBibleVerse(String book, String chapter, String verse, String text, String version, ArrayList<Partner> mates) {
         BibleVerse newVerse = new BibleVerse(book, chapter, verse, text, version, mates);
         bibleVerses.add(newVerse);
     }
@@ -472,7 +492,7 @@ private String loadJournal() {
             "Sunday"
         };
             BibleVerse todayVerse = dailyVerses.get(i);
-            JOptionPane.showMessageDialog(null, daysOfWeek[i] + " Daily Bread Verse:\n" + todayVerse.getBook() +" " + todayVerse.getChapter() + ":" + todayVerse.getVerse() + " " + todayVerse.getVersion() + " :" + todayVerse.getText());
+            JOptionPane.showMessageDialog(null, daysOfWeek[i] + " Daily Bread Verse:\n" + todayVerse.getBook() +" " + todayVerse.getChapter() + ":" + todayVerse.getVerse() + " " + todayVerse.getVersion() + " : " + todayVerse.getText());
         } else {
             JOptionPane.showMessageDialog(null, "No verse available for today.");
         }
@@ -492,7 +512,6 @@ private String loadJournal() {
                 loadedVerses.add(verse);
             }
     
-            System.out.println("Bible verses loaded from file.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -501,40 +520,25 @@ private String loadJournal() {
     }
     
     private static BibleVerse parseBibleVerseFromLine(String line) {
-        // Skip lines that do not start with "Book:"
-        if (!line.startsWith("Book: ")) {
-            System.err.println("Error: Invalid line format - Skipping: " + line);
-            return null;
-        }
+
     
         // Split the line into parts based on the format used in the toString method
-        String[] parts = line.split("::");
-        System.out.println(parts.length);
-        System.out.println(parts[0]);
-        System.out.println(parts[1]);
-        System.out.println(parts[2]);
-        System.out.println(parts[3]);
-        System.out.println(parts[4]);
-        System.out.println(parts[5]);
-    
+        String[] parts = line.split(":", 8);
+   
         // Ensure that there are enough parts to extract information
         if (parts.length >= 5) {
             // Extract information from each part
-            String book = parts[0].substring("Book: ".length()).trim();
-            int chapter = Integer.parseInt(parts[1].substring("Chapter: ".length()).trim());
-            int verse = Integer.parseInt(parts[2].substring("Verse: ".length()).trim());
-            String text = parts[3].substring("Text: ".length()).trim();
-            String version = parts[4].substring("Version: ".length()).trim();
-    
             ArrayList<Partner> mates = new ArrayList<>();
-            if (parts.length > 5 && parts[5].startsWith("Memorization Partners-")) {
-                for (int i = 6; i < parts.length; i++) {
-                    String[] mateParts = parts[i].substring(2).split(": ");
-                    String partnerType = mateParts[0].trim();
-                    String partnerVerse = mateParts[1].trim();
+            String book = parts[0];
+            String chapter = parts[1];
+            String verse = parts[2];
+            String text = parts[3];
+            String version = parts[4];
+            for (int i = 5; i < parts.length; i++) {
+                    String partnerType = parts[i];
+                    String partnerVerse = "verse";
                     mates.add(new Partner(partnerType, partnerVerse, false));
                 }
-            }
     
             // Create and return a BibleVerse object
             return new BibleVerse(book, chapter, verse, text, version, mates);

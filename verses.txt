@@ -1,8 +1,5 @@
-
-Book: Genesis::Chapter: 1::Verse: 1::Text: In the beginning...::Version: NIV::Memorization Partners-::- Pastor: 1::- Member: 1::
-
-
-
-
-
-
+Genesis:1:1:In the beginning:NIV:Family:Member
+John:8:58:Very truly I tell you,” Jesus answered, “before Abraham was born, I am!:NIV:Pastor
+Matthew:28:17:Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit:NIV:Pastor
+Corinthians:13:1:If I speak in the tongues[a] of men or of angels, but do not have love, I am only a resounding gong or a clanging cymbal.:NLT:Pastor:Family:Member
+Habakkuk:1:2:How long, Lord, must I call for help, but you do not listen? Or cry out to you, “Violence!” but you do not save?:NLT:Family
